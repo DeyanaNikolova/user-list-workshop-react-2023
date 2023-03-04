@@ -14,7 +14,7 @@ export default function Details({
 }) {
   return (
     <div className="overlay">
-      <div className="backdrop"></div>
+      <div className="backdrop" onClick={onClose} ></div>
       <div className="modal">
         <div className="detail-container">
           <header className="headers">

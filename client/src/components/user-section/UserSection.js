@@ -1,7 +1,9 @@
-import User from './User';
 import { useState } from 'react';
-import Details from '../Details';
+
 import * as userService from '../../services/userService';
+
+import User from './User';
+import Details from '../Details';
 
 
 export default function UserSection({

@@ -1,16 +1,15 @@
-import './App.css';
 import { useEffect, useState } from 'react';
 
 import * as userService from './services/userService';
 
 import CreateEdit from './components/CreateEdit';
-
 import Delete from './components/Delete';
 import Footer from './components/common/Footer';
 import Header from './components/common/Header';
 import Search from './components/search/Search';
 import UserSection from './components/user-section/UserSection';
 import Pagination from './components/Pagination';
+import './App.css';
 
 function App() {
     const [users, setUsers] = useState([]);
