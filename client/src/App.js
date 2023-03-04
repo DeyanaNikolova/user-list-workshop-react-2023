@@ -1,4 +1,4 @@
-import './App.css'
+import './App.css';
 
 import CreateEdit from './components/CreateEdit';
 import Details from './components/Details';
@@ -11,7 +11,8 @@ import Pagination from './components/Pagination';
 
 function App() {
     return (
-        <div>
+        <>
+
             <Header />
 
             <main className="main">
@@ -32,7 +33,7 @@ function App() {
             </main>
 
             <Footer />
-        </div>
+        </>
     );
 }
 
