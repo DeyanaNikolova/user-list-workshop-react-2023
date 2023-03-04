@@ -1,4 +1,7 @@
 import './App.css';
+import { useEffect, useState } from 'react';
+
+import * as userService from './services/userService';
 
 import CreateEdit from './components/CreateEdit';
 import Details from './components/Details';
@@ -10,6 +13,17 @@ import UserSection from './components/user-section/UserSection';
 import Pagination from './components/Pagination';
 
 function App() {
+    const [ users, setUsers] = useState([]);
+    useEffect(() => {
+        userService.getAll()
+        .then(users => {
+            setUsers(users);
+        })
+        .catch(err => {
+            console.log('Error' + err);
+        });
+        
+    }, []);
     return (
         <>
 
@@ -20,7 +34,7 @@ function App() {
 
                     <Search />
 
-                    <UserSection />
+                    <UserSection users={users} />
                     
                     <Pagination />
 
