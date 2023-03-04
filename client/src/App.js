@@ -15,7 +15,7 @@ function App() {
             <Header />
 
             <main className="main">
-                <section class="card users-container">
+                <section className="card users-container">
 
                     <Search />
 
