@@ -4,33 +4,66 @@ import * as userService from '../../services/userService';
 
 import User from './User';
 import Details from '../Details';
+import CreateEdit from '../CreateEdit';
 
+const UserActions = {
+  Delails: 'details',
+  Edit: 'edit',
+  Delete: 'delete'
+}
 
 export default function UserSection({
   users,
 }) {
 
-  const [selectedUser, setSelectedUser] = useState(null);
+  const [userAction, setUserAction] = useState({ user: null, action: null });
+
+  const onEditClick = async (userId) => {
+    const user = await userService.getById(userId);
+    setUserAction({
+      user,
+      action: UserActions.Edit
+    });
+  }
+  const onDeleteClick = async (userId) => {
+    const user = await userService.getById(userId);
+    setUserAction({
+      user,
+      action: UserActions.Delete
+    });
+  }
 
   const onInfoClick = async (userId) => {
     const user = await userService.getById(userId);
-
-    setSelectedUser(user);
+    setUserAction({
+      user,
+      action: UserActions.Delails
+    });
   }
 
   const onClose = () => {
-    setSelectedUser(null);
+    setUserAction({ user: null, action: null });
   }
+
   return (
     <>
-      {selectedUser && <Details {...selectedUser} onClose={onClose} />}
+      {userAction.action === UserActions.Delails &&
+        < Details user={userAction.user} onClose={onClose}
+        />
+      }
+
+      {userAction.action === UserActions.Edit &&
+        < CreateEdit user={userAction.user}
+          onclose={onClose} onEditClick={onEditClick}
+        />
+      }
       <div className="table-wrapper">
 
-       {/* <div className="loading-shade">
+        {/* <div className="loading-shade">
 
           {/* <div className="spinner"></div> */}
 
-          {/*  <div className="table-overlap">
+        {/*  <div className="table-overlap">
           <svg
             aria-hidden="true"
             focusable="false"
@@ -49,9 +82,9 @@ export default function UserSection({
           <h2>There is no users yet.</h2>
          </div> */}
 
-          {/*<!-- No content overlap component  -->*/}
+        {/*<!-- No content overlap component  -->*/}
 
-          {/* <div className="table-overlap"> 
+        {/* <div className="table-overlap"> 
           <svg
             aria-hidden="true"
             focusable="false"
@@ -70,9 +103,9 @@ export default function UserSection({
            <h2>Sorry, we couldn't find what you're looking for.</h2> 
         </div> */}
 
-          {/* <!-- On error overlap component  -->  */}
+        {/* <!-- On error overlap component  -->  */}
 
-          {/* <div className="table-overlap">
+        {/* <div className="table-overlap">
           <svg
             aria-hidden="true"
             focusable="false"
@@ -142,8 +175,9 @@ export default function UserSection({
             </tr>
           </thead>
           <tbody>
-
-            {users.map(u => <User key={u._id} {...u} onInfoClick={onInfoClick} />)}
+            {users.map(u => <User key={u._id} {...u} 
+            onInfoClick={onInfoClick}  onEditClick={onEditClick}/>)
+            }
           </tbody>
         </table>
       </div>

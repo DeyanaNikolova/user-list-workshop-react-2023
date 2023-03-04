@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import * as userService from './services/userService';
 
-import CreateEdit from './components/CreateEdit';
+
 import Delete from './components/Delete';
 import Footer from './components/common/Footer';
 import Header from './components/common/Header';
@@ -39,8 +39,6 @@ function App() {
                     <button className="btn-add btn">Add new user</button>
 
                     <Pagination />
-
-                    {/* <CreateEdit /> */}
 
                     {/* <Delete /> */}
                 </section>

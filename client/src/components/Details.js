@@ -1,15 +1,7 @@
 import formatDate from "../utils/dateUtils";
 
 export default function Details({
-  _id,
-  firstName,
-  lastName,
-  email,
-  imageUrl,
-  createdAt,
-  updatedAt,
-  phoneNumber,
-  address,
+ user,
   onClose
 }) {
   return (
@@ -30,23 +22,23 @@ export default function Details({
           </header>
           <div className="content">
             <div className="image-container">
-              <img src={imageUrl} alt={`${firstName} ${lastName}`} className="image" />
+              <img src={user.imageUrl} alt={`${user.firstName} ${user.lastName}`} className="image" />
             </div>
             <div className="user-details">
-              <p>User Id: <strong>{_id}</strong></p>
+              <p>User Id: <strong>{user._id}</strong></p>
               <p>
                 Full Name:
-                <strong>{`${firstName}  ${lastName}`}</strong>
+                <strong>{`${user.firstName}  ${user.lastName}`}</strong>
               </p>
-              <p>Email: <strong>{email}</strong></p>
-              <p>Phone Number: <strong>{phoneNumber}</strong></p>
+              <p>Email: <strong>{user.email}</strong></p>
+              <p>Phone Number: <strong>{user.phoneNumber}</strong></p>
               <p>
                 Address:
-                <strong> {`${address.country}, ${address.city}, ${address.street} ${address.streetNumber}`} </strong>
+                <strong> {`${user.address.country}, ${user.address.city}, ${user.address.street} ${user.address.streetNumber}`} </strong>
               </p>
 
-              <p>Created on: <strong>{formatDate(createdAt)}</strong></p>
-              <p>Modified on: <strong>{formatDate(updatedAt)}</strong></p>
+              <p>Created on: <strong>{formatDate(user.createdAt)}</strong></p>
+              <p>Modified on: <strong>{formatDate(user.updatedAt)}</strong></p>
             </div>
           </div>
         </div>
