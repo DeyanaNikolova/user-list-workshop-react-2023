@@ -15,9 +15,13 @@ export default function UserSection({
 
     setSelectedUser(user);
   }
+
+  const onClose = () => {
+    setSelectedUser(null);
+  }
   return (
     <>
-      {selectedUser && <Details {...selectedUser} />}
+      {selectedUser && <Details {...selectedUser} onClose={onClose} />}
       <div className="table-wrapper">
 
        {/* <div className="loading-shade">

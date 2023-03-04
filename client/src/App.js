@@ -13,17 +13,17 @@ import UserSection from './components/user-section/UserSection';
 import Pagination from './components/Pagination';
 
 function App() {
-    const [ users, setUsers] = useState([]);
+    const [users, setUsers] = useState([]);
 
     useEffect(() => {
         userService.getAll()
-        .then(users => {
-            setUsers(users);
-        })
-        .catch(err => {
-            console.log('Error' + err);
-        });
-        
+            .then(users => {
+                setUsers(users);
+            })
+            .catch(err => {
+                console.log('Error' + err);
+            });
+
     }, []);
     return (
         <>
@@ -36,7 +36,9 @@ function App() {
                     <Search />
 
                     <UserSection users={users} />
-                    
+
+                    <button className="btn-add btn">Add new user</button>
+
                     <Pagination />
 
                     {/* <CreateEdit /> */}

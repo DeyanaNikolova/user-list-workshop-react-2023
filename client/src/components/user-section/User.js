@@ -8,7 +8,7 @@ export default function User({
     imageUrl,
     createdAt,
     phoneNumber,
-    onInfoClick
+    onInfoClick,
 }) {
     return (
         <tr>
@@ -53,4 +53,3 @@ export default function User({
     );
 }
 
-// <button className="btn-add btn">Add new user</button>
