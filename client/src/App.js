@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import * as userService from './services/userService';
 
 import CreateEdit from './components/CreateEdit';
-import Details from './components/Details';
+
 import Delete from './components/Delete';
 import Footer from './components/common/Footer';
 import Header from './components/common/Header';
@@ -14,6 +14,7 @@ import Pagination from './components/Pagination';
 
 function App() {
     const [ users, setUsers] = useState([]);
+
     useEffect(() => {
         userService.getAll()
         .then(users => {
@@ -37,8 +38,6 @@ function App() {
                     <UserSection users={users} />
                     
                     <Pagination />
-
-                    {/* <Details /> */}
 
                     {/* <CreateEdit /> */}
 
