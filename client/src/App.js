@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import * as userService from './services/userService';
 
 
-//import Delete from './components/Delete';
 import Footer from './components/common/Footer';
 import Header from './components/common/Header';
 import Search from './components/search/Search';
@@ -36,10 +35,23 @@ function App() {
 
         // 4. Sent AJAXS request to server
         const createdUser = await userService.create(data);
-    
+
         // 4. If successfull add new user to the state
         setUsers(state => [...state, createdUser]);
-    }
+    };
+
+
+    const onUserUpdateSubmit = async (e) => {
+        e.preventDefault();
+ 
+    };
+
+    const onUserDelete = async (userId) => {
+        // Delete from server
+        await userService.remove(userId);
+        // Delete from state
+        setUsers(state => state.filter(u => u._id !== userId));
+    };
 
     return (
         <>
@@ -50,11 +62,15 @@ function App() {
 
                     <Search />
 
-                    <UserSection users={users} onUserCreateSubmit={onUserCreateSubmit}/>
+                    <UserSection
+                        users={users}
+                        onUserCreateSubmit={onUserCreateSubmit}
+                        onUserUpdateSubmit={onUserUpdateSubmit}
+                        onUserDelete={onUserDelete}
+                    />
 
                     <Pagination />
 
-                    {/* <Delete /> */}
                 </section>
             </main>
 

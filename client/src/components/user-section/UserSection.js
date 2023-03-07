@@ -1,46 +1,79 @@
 import { useState } from 'react';
+
 import * as userService from '../../services/userService';
 
 import User from './User';
 import Details from '../Details';
 import UserCreate from '../UserCreate';
+import Delete from '../Delete';
 
 
 export default function UserSection({
   users,
-  onUserCreateSubmit
+  onUserCreateSubmit,
+  onUserUpdateSubmit,
+  onUserDelete
 }) {
   const [selectedUser, setSelectedUser] = useState(null);
+  const [showDeleteUserModal, setShowDeleteUserModal] = useState(null);
+  const [showEditUser, setShowEditUser] = useState(null);
   const [showAddUser, setShowAddUser] = useState(false);
 
   const onInfoClick = async (userId) => {
- const user = await userService.getById(userId);
-      setSelectedUser(user);
-    
-  }
+    const user = await userService.getById(userId);
+    setSelectedUser(user);
+
+  };
 
   const onClose = () => {
     setSelectedUser(null);
     setShowAddUser(false);
-  }
+    setShowDeleteUserModal(null);
+    setShowEditUser(null);
+  };
 
   const onUserAddClick = () => {
     setShowAddUser(true);
-  }
+  };
+
   const onUserCreateSubmitHandler = (e) => {
     onUserCreateSubmit(e);
-    setShowAddUser(false)
-  }
+    setShowAddUser(false);
+  };
 
+  const onDeleteClick = (userId) => {
+    setShowDeleteUserModal(userId);
+  };
+
+  const onDeleteHandler = () => {
+    onUserDelete(showDeleteUserModal);
+    onClose();
+  };
+
+  const onEditClick = async (userId) => {
+    const user = await userService.getById(userId);
+    setShowEditUser(user);
+  };
 
   return (
     <>
-   {selectedUser && <Details {...selectedUser} onClose={onClose}/>}
+      {selectedUser && <Details {...selectedUser}
+        onClose={onClose} />}
 
-    {showAddUser &&<UserCreate onClose={onClose} onUserCreateSubmit={onUserCreateSubmitHandler}/>}
+      {showAddUser && <UserCreate
+        onClose={onClose}
+        onUserCreateSubmit={onUserCreateSubmitHandler} />}
+
+      {showDeleteUserModal && <Delete
+        onClose={onClose}
+        onDelete={onDeleteHandler} />}
+
+      {showEditUser && < UserCreate user={showEditUser}
+        onClose={onClose}
+        onUserCreateSubmit={onUserUpdateSubmit} />}
 
       <div className="table-wrapper">
-        
+
         {/* <div className="loading-shade">
 
           {/* <div className="spinner"></div> */}
@@ -157,13 +190,18 @@ export default function UserSection({
             </tr>
           </thead>
           <tbody>
-            {users.map(u => <User key={u._id} {...u} 
-            onInfoClick={onInfoClick} />)
-            }
+            {users.map(u =>
+              <User
+                {...u}
+                key={u._id}
+                onInfoClick={onInfoClick}
+                onDeleteClick={onDeleteClick}
+                onEditClick={onEditClick}
+              />
+            )}
           </tbody>
         </table>
       </div>
-
       <button className="btn-add btn" onClick={onUserAddClick}>Add new user</button>
     </>
   );
