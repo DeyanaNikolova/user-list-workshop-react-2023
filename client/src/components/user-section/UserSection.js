@@ -1,62 +1,28 @@
 import { useState } from 'react';
-
 import * as userService from '../../services/userService';
 
 import User from './User';
 import Details from '../Details';
-import CreateEdit from '../CreateEdit';
 
-const UserActions = {
-  Delails: 'details',
-  Edit: 'edit',
-  Delete: 'delete'
-}
 
 export default function UserSection({
   users,
 }) {
-
-  const [userAction, setUserAction] = useState({ user: null, action: null });
-
-  const onEditClick = async (userId) => {
-    const user = await userService.getById(userId);
-    setUserAction({
-      user,
-      action: UserActions.Edit
-    });
-  }
-  const onDeleteClick = async (userId) => {
-    const user = await userService.getById(userId);
-    setUserAction({
-      user,
-      action: UserActions.Delete
-    });
-  }
+  const [selectedUser, setSelectedUser] = useState(null);
 
   const onInfoClick = async (userId) => {
-    const user = await userService.getById(userId);
-    setUserAction({
-      user,
-      action: UserActions.Delails
-    });
+ const user = await userService.getById(userId);
+      setSelectedUser(user);
+    
   }
 
   const onClose = () => {
-    setUserAction({ user: null, action: null });
+    setSelectedUser(null);
   }
 
   return (
     <>
-      {userAction.action === UserActions.Delails &&
-        < Details user={userAction.user} onClose={onClose}
-        />
-      }
-
-      {userAction.action === UserActions.Edit &&
-        < CreateEdit user={userAction.user}
-          onclose={onClose} onEditClick={onEditClick}
-        />
-      }
+   {selectedUser && <Details {...selectedUser} onClose={onClose}/>}
       <div className="table-wrapper">
 
         {/* <div className="loading-shade">
@@ -176,7 +142,7 @@ export default function UserSection({
           </thead>
           <tbody>
             {users.map(u => <User key={u._id} {...u} 
-            onInfoClick={onInfoClick}  onEditClick={onEditClick}/>)
+            onInfoClick={onInfoClick} />)
             }
           </tbody>
         </table>

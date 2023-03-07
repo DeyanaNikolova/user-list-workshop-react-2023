@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import * as userService from './services/userService';
 
 
-import Delete from './components/Delete';
+//import Delete from './components/Delete';
 import Footer from './components/common/Footer';
 import Header from './components/common/Header';
 import Search from './components/search/Search';
@@ -26,7 +26,6 @@ function App() {
     }, []);
     return (
         <>
-
             <Header />
 
             <main className="main">
