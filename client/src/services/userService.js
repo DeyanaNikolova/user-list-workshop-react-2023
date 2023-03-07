@@ -18,7 +18,6 @@ export const create = async (userData) => {
 
     const { country, city, street, streetNumber, ...data } = userData;
     
-
     data.address = {
         country, 
         city, 
@@ -38,11 +37,9 @@ export const create = async (userData) => {
     return result.user;
 };
 
-export const update = async (userData) => {
-
+export const update = async (userId, userData) => {
     const { country, city, street, streetNumber, ...data } = userData;
     
-
     data.address = {
         country, 
         city, 
@@ -50,8 +47,8 @@ export const update = async (userData) => {
         streetNumber
     };
 
-    const response = await fetch(baseUrl, {
-        method: 'POST',
+    const response = await fetch(`${baseUrl}/${userId}`, {
+        method: 'PUT',
         headers: {
             'content-type': 'application/json'
         },

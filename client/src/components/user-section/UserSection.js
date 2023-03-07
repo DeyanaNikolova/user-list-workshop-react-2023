@@ -41,6 +41,12 @@ export default function UserSection({
     setShowAddUser(false);
   };
 
+  const onUserUpdateSubmitHandler = (e, userId) => {
+    onUserUpdateSubmit(e, userId);
+    // setShowEdit(null);
+    onClose()
+  };
+
   const onDeleteClick = (userId) => {
     setShowDeleteUserModal(userId);
   };
@@ -70,7 +76,7 @@ export default function UserSection({
 
       {showEditUser && < UserCreate user={showEditUser}
         onClose={onClose}
-        onUserCreateSubmit={onUserUpdateSubmit} />}
+        onUserCreateSubmit={onUserUpdateSubmitHandler} />}
 
       <div className="table-wrapper">
 
