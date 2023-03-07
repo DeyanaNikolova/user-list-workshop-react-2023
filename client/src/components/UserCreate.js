@@ -1,7 +1,7 @@
-export default function CreateEdit({
+export default function UserCreate({
   user,
   onClose,
-  onEDitClick
+  onUserCreateSubmit
 }) {
   return (
     <div className="overlay">
@@ -19,7 +19,7 @@ export default function CreateEdit({
               </svg>
             </button>
           </header>
-          <form>
+          <form onSubmit={onUserCreateSubmit}>
             <div className="form-row">
               <div className="form-group">
                 <label htmlFor="firstName">First name</label>

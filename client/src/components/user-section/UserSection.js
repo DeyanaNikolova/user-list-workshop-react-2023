@@ -3,12 +3,15 @@ import * as userService from '../../services/userService';
 
 import User from './User';
 import Details from '../Details';
+import UserCreate from '../UserCreate';
 
 
 export default function UserSection({
   users,
+  onUserCreateSubmit
 }) {
   const [selectedUser, setSelectedUser] = useState(null);
+  const [showAddUser, setShowAddUser] = useState(false);
 
   const onInfoClick = async (userId) => {
  const user = await userService.getById(userId);
@@ -18,13 +21,26 @@ export default function UserSection({
 
   const onClose = () => {
     setSelectedUser(null);
+    setShowAddUser(false);
   }
+
+  const onUserAddClick = () => {
+    setShowAddUser(true);
+  }
+  const onUserCreateSubmitHandler = (e) => {
+    onUserCreateSubmit(e);
+    setShowAddUser(false)
+  }
+
 
   return (
     <>
    {selectedUser && <Details {...selectedUser} onClose={onClose}/>}
-      <div className="table-wrapper">
 
+    {showAddUser &&<UserCreate onClose={onClose} onUserCreateSubmit={onUserCreateSubmitHandler}/>}
+
+      <div className="table-wrapper">
+        
         {/* <div className="loading-shade">
 
           {/* <div className="spinner"></div> */}
@@ -147,6 +163,8 @@ export default function UserSection({
           </tbody>
         </table>
       </div>
+
+      <button className="btn-add btn" onClick={onUserAddClick}>Add new user</button>
     </>
   );
 }

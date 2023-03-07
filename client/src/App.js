@@ -24,6 +24,23 @@ function App() {
             });
 
     }, []);
+
+    const onUserCreateSubmit = async (e) => {
+        // 1. Stop aothomatic form submit
+        e.preventDefault();
+        // 2. Get formData from DOM tree
+        const formData = new FormData(e.currentTarget);
+
+        // 3. Convert formData to data object
+        const data = Object.fromEntries(formData);
+
+        // 4. Sent AJAXS request to server
+        const createdUser = await userService.create(data);
+    
+        // 4. If successfull add new user to the state
+        setUsers(state => [...state, createdUser]);
+    }
+
     return (
         <>
             <Header />
@@ -33,9 +50,7 @@ function App() {
 
                     <Search />
 
-                    <UserSection users={users} />
-
-                    <button className="btn-add btn">Add new user</button>
+                    <UserSection users={users} onUserCreateSubmit={onUserCreateSubmit}/>
 
                     <Pagination />
 
