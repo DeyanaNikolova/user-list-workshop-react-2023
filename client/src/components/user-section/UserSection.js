@@ -12,7 +12,10 @@ export default function UserSection({
   users,
   onUserCreateSubmit,
   onUserUpdateSubmit,
-  onUserDelete
+  onUserDelete,
+  formValues,
+  formChanceHandler,
+  formErrors
 }) {
   const [selectedUser, setSelectedUser] = useState(null);
   const [showDeleteUserModal, setShowDeleteUserModal] = useState(null);
@@ -63,20 +66,34 @@ export default function UserSection({
 
   return (
     <>
-      {selectedUser && <Details {...selectedUser}
-        onClose={onClose} />}
+      {selectedUser && 
+      <Details {...selectedUser}
+          onClose={onClose} 
+      />}
 
-      {showAddUser && <UserCreate
-        onClose={onClose}
-        onUserCreateSubmit={onUserCreateSubmitHandler} />}
+      {showAddUser && 
+      <UserCreate
+          onClose={onClose}
+          onUserCreateSubmit={onUserCreateSubmitHandler} 
+          formValues={formValues}
+          formChanceHandler={formChanceHandler}
+          formErrors={formErrors}
+      />}
 
-      {showDeleteUserModal && <Delete
-        onClose={onClose}
-        onDelete={onDeleteHandler} />}
-
-      {showEditUser && < UserCreate user={showEditUser}
-        onClose={onClose}
-        onUserCreateSubmit={onUserUpdateSubmitHandler} />}
+      {showDeleteUserModal && 
+      <Delete
+          onClose={onClose}
+          onDelete={onDeleteHandler} 
+      />}
+      {showEditUser && 
+      < UserCreate 
+            user={showEditUser}
+            onClose={onClose}
+            onUserCreateSubmit={onUserUpdateSubmitHandler} 
+            formValues={formValues}
+            formChanceHandler={formChanceHandler}
+            formErrors={formErrors}
+      />}
 
       <div className="table-wrapper">
 

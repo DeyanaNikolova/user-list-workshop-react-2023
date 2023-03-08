@@ -13,6 +13,16 @@ import './App.css';
 function App() {
     const [users, setUsers] = useState([]);
 
+    const [formValues, setFormValues] = useState({
+        firstName: '',
+        lastName: '',
+    });
+
+    const [formErrors, setFormErrors] = useState({
+        firstName: '',
+        lastName: '',
+    });
+
     useEffect(() => {
         userService.getAll()
             .then(users => {
@@ -60,6 +70,19 @@ function App() {
         setUsers(state => state.filter(u => u._id !== userId));
     };
 
+    const formChanceHandler = (e) => {
+        const value = e.target.value;
+        if(e.target.name === 'firstName' && (value.length < 3 || value.length > 20)){
+            setFormErrors(state => ({...state, firstName: 'First name should be between 3 and 20 characters long!'}));
+        }
+
+        if(e.target.name === 'lastName' && (value.length < 3 || value.length > 20)){
+            setFormErrors(state => ({...state, lastName: 'Last name should be between 3 and 20 characters long!'}));
+        }
+
+        setFormValues(state => ({...state, [e.target.name]: e.target.value}));
+    };
+
     return (
         <>
             <Header />
@@ -74,6 +97,9 @@ function App() {
                         onUserCreateSubmit={onUserCreateSubmit}
                         onUserUpdateSubmit={onUserUpdateSubmit}
                         onUserDelete={onUserDelete}
+                        formValues={formValues}
+                        formChangeHandler={formChanceHandler}
+                        formErrors={formErrors}
                     />
 
                     <Pagination />
