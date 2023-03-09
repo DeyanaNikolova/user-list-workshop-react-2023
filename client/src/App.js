@@ -35,14 +35,14 @@ function App() {
     }, []);
 
     const onUserCreateSubmit = async (e) => {
-        // 1. Stop aothomatic form submit
+        // 1. Stop authomatic form submit
         e.preventDefault();
         // 2. Get formData from DOM tree
         const formData = new FormData(e.currentTarget);
 
         // 3. Convert formData to data object
         const data = Object.fromEntries(formData);
-
+        //formValues
         // 4. Sent AJAXS request to server
         const createdUser = await userService.create(data);
 
@@ -71,16 +71,21 @@ function App() {
     };
 
     const formChanceHandler = (e) => {
+    
+        setFormValues(state => ({...state, [e.target.name]: e.target.value}));
+    };
+
+    const   formValidate = (e) => {
         const value = e.target.value;
+        let errors = {};
         if(e.target.name === 'firstName' && (value.length < 3 || value.length > 20)){
-            setFormErrors(state => ({...state, firstName: 'First name should be between 3 and 20 characters long!'}));
+           errors.firstName = 'First name should be between 3 and 20 characters long!';
         }
 
         if(e.target.name === 'lastName' && (value.length < 3 || value.length > 20)){
-            setFormErrors(state => ({...state, lastName: 'Last name should be between 3 and 20 characters long!'}));
+            errors.lastName = 'Last name should be between 3 and 20 characters long!';
         }
-
-        setFormValues(state => ({...state, [e.target.name]: e.target.value}));
+        setFormErrors(errors);
     };
 
     return (
@@ -98,8 +103,9 @@ function App() {
                         onUserUpdateSubmit={onUserUpdateSubmit}
                         onUserDelete={onUserDelete}
                         formValues={formValues}
-                        formChangeHandler={formChanceHandler}
+                        formChanceHandler={formChanceHandler}
                         formErrors={formErrors}
+                        formValidate={formValidate}
                     />
 
                     <Pagination />

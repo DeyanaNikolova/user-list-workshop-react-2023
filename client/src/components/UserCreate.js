@@ -4,7 +4,8 @@ export default function UserCreate({
   onUserCreateSubmit,
   formValues,
   formChanceHandler,
-  formErrors
+  formErrors,
+  formValidate
 }) {
   return (
     <div className="overlay">
@@ -28,23 +29,25 @@ export default function UserCreate({
                 <label htmlFor="firstName">First name</label>
                 <div className="input-wrapper">
                   <span><i className="fa-solid fa-user"></i></span>
-                  <input id="firstName" name="firstName" type="text" value={formValues.firstName} onChange={formChanceHandler} />
+                  <input id="firstName" name="firstName" type="text" value={formValues.firstName} onChange={formChanceHandler} onBlur={formValidate} />
                 </div>
                 {formErrors.firstName && 
                 <p className="form-error">
                  {formErrors.firstName}
-                </p>} 
+                </p>
+                } 
               </div>
               <div className="form-group">
                 <label htmlFor="lastName">Last name</label>
                 <div className="input-wrapper">
                   <span><i className="fa-solid fa-user"></i></span>
-                  <input id="lastName" name="lastName" type="text" value={formValues.lastName} onChange={formChanceHandler} />
+                  <input id="lastName" name="lastName" type="text" value={formValues.lastName} onChange={formChanceHandler} onBlur={formValidate} />
                 </div>
                 {formErrors.lastName &&
                   <p className="form-error">
                   {formErrors.lastName}
-                  </p>}  
+                  </p>
+                }  
               </div>
             </div>
 
